@@ -1,51 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import MovieItem from "./MovieItem";
+import { getMovies } from "../../actions/movieActions";
 
-const Movies = () => {
-  const data = [
-    {
-      id: 1,
-      name: "ash",
-    },
-    {
-      id: 2,
-      name: "ash",
-    },
-    {
-      id: 3,
-      name: "ash",
-    },
-    {
-      id: 4,
-      name: "ash",
-    },
-    {
-      id: 5,
-      name: "ash",
-    },
-    {
-      id: 6,
-      name: "ash",
-    },
-    {
-      id: 7,
-      name: "ash",
-    },
-    {
-      id: 8,
-      name: "ash",
-    },
-    {
-      id: 9,
-      name: "ash",
-    },
-  ];
+const Movies = ({ movie: { movies, loading }, getMovies }) => {
+  useEffect(() => {
+    getMovies();
+    //eslint-disable-next-line
+  }, []);
+
   return (
     <div className="container">
       <div style={userStyle}>
-        {data.map((val) => {
-          return <MovieItem key={val.id} />;
-        })}
+        {movies !== null &&
+          movies["content-items"].content.map((val, index) => {
+            return (
+              <MovieItem
+                key={index}
+                movieData={movies["content-items"].content}
+                index={index}
+              />
+            );
+          })}
+        {movies !== null &&
+          console.log(
+            "This is from redux ",
+            "Type:",
+            typeof movies,
+            "Value:",
+
+            movies
+          )}
       </div>
     </div>
   );
@@ -57,4 +42,7 @@ const userStyle = {
   gridGap: "30px",
 };
 
-export default Movies;
+const mapStateToProps = (state) => ({
+  movie: state.movie,
+});
+export default connect(mapStateToProps, { getMovies })(Movies);

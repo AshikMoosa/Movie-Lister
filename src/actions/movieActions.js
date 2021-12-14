@@ -10,16 +10,17 @@ import {
   SEARCH_MOVIES,
 } from "./types";
 
+//Get page1 movies data from json
 export const getMovies = () => async (dispatch) => {
   try {
     setLoading();
 
-    const res = await fetch("/logs");
+    const res = await fetch("/CONTENTLISTINGPAGE-PAGE1.json");
     const data = await res.json();
 
     dispatch({
       type: GET_MOVIES,
-      payload: data,
+      payload: data.page,
     });
   } catch (err) {
     dispatch({
