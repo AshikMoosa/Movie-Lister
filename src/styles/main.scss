@@ -16,13 +16,6 @@ body {
   margin: 0 30px;
 }
 
-// h3 {
-//   overflow: hidden;
-//   white-space: nowrap;
-//   text-overflow: ellipsis;
-//   width: calc(100% - 1px);
-// }
-
 //Navbar
 .navbar {
   display: flex;
@@ -30,6 +23,8 @@ body {
   background-image: url("../images/nav_bar.png");
   z-index: 999;
   margin-bottom: 36px;
+
+  //back button
   .back-cta {
     align-self: center;
     width: 2em;
@@ -44,6 +39,7 @@ body {
     align-self: center;
   }
 
+  //search button
   .search-cta {
     align-self: center;
     width: auto;
@@ -54,7 +50,14 @@ body {
   }
 }
 
-//Image Container
+//Grid Image Container
 .lazy-load-image-background {
   width: 100%;
+}
+
+//Responsiveness only for desktop app - optional
+@media only screen and (min-width: "768px") {
+  .container {
+    margin: 0 170px;
+  }
 }

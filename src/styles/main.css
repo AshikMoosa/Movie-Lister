@@ -59,4 +59,10 @@ body::-webkit-scrollbar {
 .lazy-load-image-background {
   width: 100%;
 }
+
+@media only screen and (min-width: 768px) {
+  .container {
+    margin: 0 170px;
+  }
+}
 /*# sourceMappingURL=main.css.map */

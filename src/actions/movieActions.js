@@ -1,36 +1,32 @@
 import {
-  GET_MOVIES,
   SET_LOADING,
   MOVIES_ERROR,
   ADD_MOVIE,
-  DELETE_MOVIE,
-  SET_CURRENT,
-  CLEAR_CURRENT,
-  UPDATE_MOVIE,
-  SEARCH_MOVIES,
+  FILTER_MOVIES,
+  CLEAR_MOVIES,
 } from "./types";
 
-//Get page1 movies data from json
-export const getMovies = () => async (dispatch) => {
-  try {
-    setLoading();
+// //Get page1 movies data from json
+// export const getMovies = () => async (dispatch) => {
+//   try {
+//     setLoading();
 
-    const res = await fetch("/CONTENTLISTINGPAGE-PAGE1.json");
-    const data = await res.json();
+//     const res = await fetch("/CONTENTLISTINGPAGE-PAGE1.json");
+//     const data = await res.json();
 
-    dispatch({
-      type: GET_MOVIES,
-      payload: data.page["content-items"].content,
-    });
-  } catch (err) {
-    dispatch({
-      type: MOVIES_ERROR,
-      payload: err.response.statusText,
-    });
-  }
-};
+//     dispatch({
+//       type: GET_MOVIES,
+//       payload: data.page["content-items"].content,
+//     });
+//   } catch (err) {
+//     dispatch({
+//       type: MOVIES_ERROR,
+//       payload: err.response.statusText,
+//     });
+//   }
+// };
 
-//Get movies data on scroll
+//Get movies data on scroll - count indicates page number
 export const fetchMoreDatas = (count) => async (dispatch) => {
   try {
     setLoading();
@@ -44,13 +40,22 @@ export const fetchMoreDatas = (count) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: MOVIES_ERROR,
-      payload: err.response,
+      payload: err.response.statusText,
     });
   }
+};
 
-  // setTimeout(() => {
-  //   setItems(items.concat(Array.from({ length: 5 })));
-  // }, 1500);
+//Filter Movies
+export const filterMovies = (text) => async (dispatch) => {
+  dispatch({
+    type: FILTER_MOVIES,
+    payload: text,
+  });
+};
+
+//Clear Movies
+export const clearMovies = () => async (dispatch) => {
+  dispatch({ type: CLEAR_MOVIES });
 };
 
 //Set loading to true

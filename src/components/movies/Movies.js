@@ -1,75 +1,61 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-
 import MovieItem from "./MovieItem";
-import { getMovies, fetchMoreDatas } from "../../actions/movieActions";
-
+import { fetchMoreDatas } from "../../actions/movieActions";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const Movies = ({ movie: { movies, loading }, getMovies, fetchMoreDatas }) => {
+const Movies = ({ movie: { movies, loading, filtered }, fetchMoreDatas }) => {
   const [count, setCount] = useState(1);
+
+  //Initial App load with page 1 data
   useEffect(() => {
-    // getMovies();
     fetchMoreDatas(count);
     setCount(count + 1);
     //eslint-disable-next-line
   }, []);
 
+  //Fetchdata from jsonfiles using reducer
   const fetchMoreData = () => {
     count <= 3 && fetchMoreDatas(count);
     setCount(count + 1);
   };
-  // const fetchMoreDatas = (count) => {
-  //   // a fake async api call like which sends
-  //   // 20 more records in 1.5 secs
-  //   fetch(`CONTENTLISTINGPAGE-PAGE${count}.json`, {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Accept: "application/json",
-  //     },
-  //   })
-  //     .then(function (response) {
-  //       return response.json();
-  //     })
-  //     .then(function (myJson) {
-  //       console.log(myJson);
-  //     });
-  //   // setTimeout(() => {
-  //   //   setItems(items.concat(Array.from({ length: 5 })));
-  //   // }, 1500);
-  // };
 
-  if (!movies) {
+  if (!movies || loading) {
     return <h1>Loading...</h1>;
   }
+
   return (
     <div className="container">
       <InfiniteScroll
         dataLength={movies.length}
         next={movies !== null && fetchMoreData}
         hasMore={true}
-        loader={<h4>Loading...</h4>}
       >
         <div style={userStyle}>
-          {movies !== null &&
-            movies.map((val, index) => {
-              return <MovieItem key={index} movieData={val} index={index} />;
-            })}
-          {movies !== null &&
-            console.log(
-              "This is from redux ",
-              "Type:",
-              typeof movies,
-              "Value:",
-
-              movies.length
-            )}
+          {movies !== null ? (
+            <>
+              {filtered !== null
+                ? filtered.map((movie, index) => {
+                    return (
+                      <MovieItem key={index} movieData={movie} index={index} />
+                    );
+                  })
+                : movies.map((movie, index) => {
+                    return (
+                      <MovieItem key={index} movieData={movie} index={index} />
+                    );
+                  })}
+            </>
+          ) : (
+            <h1>Loading Search...</h1>
+          )}
         </div>
       </InfiniteScroll>
     </div>
   );
 };
 
+//Grid Image Container Internal styling
 const userStyle = {
   display: "grid",
   gridTemplateColumns: "repeat(3,1fr)",
@@ -79,4 +65,7 @@ const userStyle = {
 const mapStateToProps = (state) => ({
   movie: state.movie,
 });
-export default connect(mapStateToProps, { getMovies, fetchMoreDatas })(Movies);
+
+export default connect(mapStateToProps, {
+  fetchMoreDatas,
+})(Movies);

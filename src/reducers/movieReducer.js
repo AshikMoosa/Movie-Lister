@@ -1,39 +1,38 @@
 import {
-  GET_MOVIES,
   SET_LOADING,
   MOVIES_ERROR,
   ADD_MOVIE,
-  DELETE_MOVIE,
-  SET_CURRENT,
-  CLEAR_CURRENT,
-  UPDATE_MOVIE,
-  SEARCH_MOVIES,
+  FILTER_MOVIES,
+  CLEAR_MOVIES,
 } from "../actions/types";
 
 const initialState = {
   movies: [],
-  current: null,
   loading: false,
+  filtered: null,
   error: null,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_MOVIES:
-      return {
-        ...state,
-        movies: action.payload,
-        loading: false,
-      };
     case ADD_MOVIE:
       return {
         ...state,
-
-        // movies: action.payload,
-        // movies: [...state.movies, ...action.payload],
-        // movies: JSON.parse(JSON.stringify(action.payload)),
         movies: [...state.movies, ...action.payload],
         loading: false,
+      };
+    case FILTER_MOVIES:
+      return {
+        ...state,
+        filtered: state.movies.filter((movie) => {
+          const regex = new RegExp(`${action.payload}`, "gi");
+          return movie.name.match(regex);
+        }),
+      };
+    case CLEAR_MOVIES:
+      return {
+        ...state,
+        filtered: null,
       };
     case SET_LOADING:
       return {
@@ -41,7 +40,6 @@ export default (state = initialState, action) => {
         loading: true,
       };
     case MOVIES_ERROR:
-      // console.error(action.payload);
       return {
         ...state,
         error: action.payload,
