@@ -6,6 +6,13 @@ body {
   font-family: "Titillium Web", sans-serif;
 }
 
+body::-webkit-scrollbar {
+  width: 0;
+  /* Remove scrollbar space */
+  background: transparent;
+  /* Optional: just make scrollbar invisible */
+}
+
 .container {
   margin: 0 30px;
 }
@@ -24,11 +31,9 @@ body {
   -ms-flex-item-align: center;
       -ms-grid-row-align: center;
       align-self: center;
-}
-
-.navbar .back-cta img {
   width: 2em;
   padding: 6px 30px;
+  cursor: pointer;
 }
 
 .navbar h1 {
@@ -45,11 +50,13 @@ body {
       -ms-grid-row-align: center;
       align-self: center;
   width: auto;
-}
-
-.navbar .search-cta img {
   width: 2em;
   float: right;
   padding: 6px 30px;
+  cursor: pointer;
+}
+
+.lazy-load-image-background {
+  width: 100%;
 }
 /*# sourceMappingURL=main.css.map */

@@ -5,12 +5,23 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Titillium Web", sans-serif;
+  &::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space */
+    background: transparent; /* Optional: just make scrollbar invisible */
+  }
 }
 
 //Utilities
 .container {
   margin: 0 30px;
 }
+
+// h3 {
+//   overflow: hidden;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+//   width: calc(100% - 1px);
+// }
 
 //Navbar
 .navbar {
@@ -21,10 +32,9 @@ body {
   margin-bottom: 36px;
   .back-cta {
     align-self: center;
-    img {
-      width: 2em;
-      padding: 6px 30px;
-    }
+    width: 2em;
+    padding: 6px 30px;
+    cursor: pointer;
   }
 
   h1 {
@@ -37,10 +47,14 @@ body {
   .search-cta {
     align-self: center;
     width: auto;
-    img {
-      width: 2em;
-      float: right;
-      padding: 6px 30px;
-    }
+    width: 2em;
+    float: right;
+    padding: 6px 30px;
+    cursor: pointer;
   }
+}
+
+//Image Container
+.lazy-load-image-background {
+  width: 100%;
 }

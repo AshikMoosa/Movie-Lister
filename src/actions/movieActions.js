@@ -20,7 +20,7 @@ export const getMovies = () => async (dispatch) => {
 
     dispatch({
       type: GET_MOVIES,
-      payload: data.page,
+      payload: data.page["content-items"].content,
     });
   } catch (err) {
     dispatch({
@@ -28,6 +28,29 @@ export const getMovies = () => async (dispatch) => {
       payload: err.response.statusText,
     });
   }
+};
+
+//Get movies data on scroll
+export const fetchMoreDatas = (count) => async (dispatch) => {
+  try {
+    setLoading();
+    const res = await fetch(`CONTENTLISTINGPAGE-PAGE${count}.json`);
+    const data = await res.json();
+
+    dispatch({
+      type: ADD_MOVIE,
+      payload: data.page["content-items"].content,
+    });
+  } catch (err) {
+    dispatch({
+      type: MOVIES_ERROR,
+      payload: err.response,
+    });
+  }
+
+  // setTimeout(() => {
+  //   setItems(items.concat(Array.from({ length: 5 })));
+  // }, 1500);
 };
 
 //Set loading to true

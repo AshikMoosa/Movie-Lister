@@ -11,7 +11,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  movies: null,
+  movies: [],
   current: null,
   loading: false,
   error: null,
@@ -25,13 +25,23 @@ export default (state = initialState, action) => {
         movies: action.payload,
         loading: false,
       };
+    case ADD_MOVIE:
+      return {
+        ...state,
+
+        // movies: action.payload,
+        // movies: [...state.movies, ...action.payload],
+        // movies: JSON.parse(JSON.stringify(action.payload)),
+        movies: [...state.movies, ...action.payload],
+        loading: false,
+      };
     case SET_LOADING:
       return {
         ...state,
         loading: true,
       };
     case MOVIES_ERROR:
-      console.error(action.payload);
+      // console.error(action.payload);
       return {
         ...state,
         error: action.payload,

@@ -4,13 +4,9 @@ import SearchButton from "../../images/search.png";
 const Navbar = () => {
   return (
     <div className="navbar">
-      <div className="back-cta">
-        <img src={BackButton} alt="Back Button" />
-      </div>
+      <img className="back-cta" src={BackButton} alt="Back Button" />
       <h1 style={{ color: "white" }}>Romantic Comedy</h1>
-      <div className="search-cta">
-        <img src={SearchButton} alt="Back Button" />
-      </div>
+      <img className="search-cta" src={SearchButton} alt="Back Button" />
     </div>
   );
 };
